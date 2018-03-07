@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+    
+    <!-- bean : 컨테이너가 생성해 저장하고 있는 객체 -->
+	
+   <bean id="writeArticleService" class="spring.chap01.WriteArticleServiceImpl" p:articleDao-ref="articleDao">
+       <!-- <constructor-arg>
+         <ref bean="articleDao" />
+      </constructor-arg> -->
+   </bean>
+
+	<bean id="articleDao" class="spring.chap01.MySQLArticleDao"></bean>
+	
+	<!-- Bar, Baz, Foo bean 생성-->
+	<bean id="bar" class="spring.DI.Bar"/>
+	<bean id="baz" class="spring.DI.Baz"/>
+	
+	<bean id="foo" class="spring.DI.Foo" p:bar-ref="bar" p:baz-ref="baz" p:i="100" p:str="hi"/>
+	
+	
+<!-- Collections -->
+	<bean id="collections" class="spring.DI.CollectionDi" >
+	<!-- List 타입 -->	
+		<property name="valueList">
+			<list>
+				<value>10</value>
+				<value>20</value>
+			</list>
+		</property>
+		
+	<!-- Map 타입 -->
+		<property name="map">
+			<map>
+				<entry>
+					<key><value>hello</value></key>
+					<ref bean="bar"/>
+				</entry>
+				<entry>
+					<key><value>hi</value></key>
+					<ref bean="baz"/>
+				</entry>
+			</map>
+		</property>
+
+	<!-- Properties 타입 -->
+		<property name="pro">
+			<props>
+				<prop key="server">192.168.1.100</prop>
+				<prop key="timeout">5000</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+<!-- 생성~소멸 -->
+	<bean id="monitor" class="spring.day0307.Monitor" init-method="start" destroy-method="stop" />
+	
+		
+<!-- 	<bean id="foo" class="spring.DI.Foo">
+		<constructor-arg ref="bar"/>
+		<constructor-arg ref="baz"/>
+	</bean>
+	
+	<bean id="foo2" class="spring.DI.Foo">
+		<constructor-arg value="hello" type="String" index="0"/>
+		<constructor-arg value="10" type="int" index="1"/>
+	</bean> -->
+	
+<!-- 	<bean id="foo3" class="spring.DI.Foo">
+		<property name="str" value="hello"/>
+		<property name="int" value="10"/>
+		<property name="bar" ref="bar"/>
+		<property name="baz" ref="baz"/>
+	</bean>
+ -->	
+<!-- 	<bean id="foo" class="spring.DI.Foo" p:bar-ref="bar" p:baz-ref="baz" p:i="100" p:str="hi"/>
+ -->
+ 
+<!--  	<bean id="fooLookup" class="spring.DI.Foo">
+ 		<lookup-method name="getBaz" bean="baz"/>
+ 	</bean>
+ --> 	
+</beans>

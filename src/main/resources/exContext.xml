@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+<aop:aspectj-autoproxy/> <!-- @Aspect 어노테이션이 있는 클래스를 자동으로 찾아서 설정해줌 -->
+<bean id="logAop" class="ex2.LogAop"/>
+
+<!-- AOP설정 -->
+<!-- <aop:config>
+  aspect id는 logger이고, logAop를 참조함
+	<aop:aspect id="logger" ref="logAop">
+		
+		pointcut(핵심기능)의 id는 publicM이고, ex패기지에 있는 모든 클래시에 공통 기능을 적용
+		<aop:pointcut id="publicM" expression="within(ex.*)"/>
+		
+		loggerAop()라는 공통 기능을 publicM이라는 pointcut에 적용
+		<aop:around> :메서드 실행 전/후 밑 exception 발생시 advice 실행
+		<aop:around pointcut-ref="publicM" method="loggerAop"/>
+	</aop:aspect>
+</aop:config>
+ -->
+
+
+<bean id="myCat" class="ex2.Cats">
+	<property name="name" value="호랑이"/>
+	<property name="age" value="1"/>
+	<property name="color" value="yellow"/>
+</bean>
+
+</beans>

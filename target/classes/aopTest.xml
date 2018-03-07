@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+<bean class="spring.day0307.GreetingServiceImpl" id="greetingTarget">
+	<property name="greeting">
+		<value>KH</value>
+	</property>
+</bean>
+
+<!-- aspect -->
+   <bean id="performanceAspect" class="spring.day0307.PerformanceAspect" />
+   <bean id="logAspect" class="spring.day0307.LogAspect" />
+
+<!-- aop설정 -->
+   <aop:config>                                      <!-- public메서드 -->
+      <aop:pointcut id="publicMethod" expression="execution(public * *(..))" />
+      
+      <aop:aspect ref="logAspect">
+        <!-- 메서드가 실행되기 전에 실행 -->
+         <aop:before method="beforeLogging" pointcut-ref="publicMethod" />
+         
+        <!-- 메서드가 끝난 후 실행 -->
+         <aop:after-returning method="afterLogging"
+            pointcut-ref="publicMethod" returning="returnValue" />  <!-- returning return하는 변수와 같아야한다. -->
+         
+        <!-- 예외발생 -->
+         <aop:after-throwing method="throwingLogging"
+            pointcut-ref="publicMethod" throwing="ex" />
+         
+         <!-- 종료가 되었으면 alwaysLogging호출 -->   
+         <aop:after method="alwaysLogging" pointcut-ref="publicMethod" />
+      </aop:aspect>
+      
+      <aop:aspect ref="performanceAspect">
+         <aop:around method="timeCheck" pointcut-ref="publicMethod" />
+      </aop:aspect>
+      
+   </aop:config>
+</beans>
