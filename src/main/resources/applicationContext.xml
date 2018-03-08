@@ -20,9 +20,7 @@
 	<!-- Bar, Baz, Foo bean 생성-->
 	<bean id="bar" class="spring.DI.Bar"/>
 	<bean id="baz" class="spring.DI.Baz"/>
-	
 	<bean id="foo" class="spring.DI.Foo" p:bar-ref="bar" p:baz-ref="baz" p:i="100" p:str="hi"/>
-	
 	
 <!-- Collections -->
 	<bean id="collections" class="spring.DI.CollectionDi" >

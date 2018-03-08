@@ -7,6 +7,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
+<!-- 핵심로직 -->
 <bean class="spring.day0307.GreetingServiceImpl" id="greetingTarget">
 	<property name="greeting">
 		<value>KH</value>
@@ -18,7 +19,9 @@
    <bean id="logAspect" class="spring.day0307.LogAspect" />
 
 <!-- aop설정 -->
-   <aop:config>                                      <!-- public메서드 -->
+   <aop:config proxy-target-class="true">                                     
+   
+    <!-- public메서드 -->
       <aop:pointcut id="publicMethod" expression="execution(public * *(..))" />
       
       <aop:aspect ref="logAspect">
