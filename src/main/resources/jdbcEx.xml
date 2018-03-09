@@ -7,6 +7,8 @@
 	
 	<!-- properties파일 읽어오기 -->
 	<context:property-placeholder location="classpath:db.properties" />
+	
+	<!-- 커넥션 풀을 만들어주는 dataSource 빈 생성 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="${jdbc.driver}" />
